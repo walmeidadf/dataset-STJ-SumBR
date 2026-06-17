@@ -101,7 +101,8 @@ def print_stats(df: pd.DataFrame, label: str) -> None:
 
 
 def run(input_path: Path, output_dir: Path, upload: bool = False) -> None:
-    records = [json.loads(l) for l in input_path.read_text().splitlines() if l.strip()]
+    with input_path.open(encoding="utf-8") as f:
+        records = [json.loads(l) for l in f if l.strip()]
     df = pd.DataFrame(records)
 
     # Garantir colunas ausentes (dados parciais de amostra)
@@ -156,7 +157,7 @@ def _upload_to_hub(output_dir: Path) -> None:
         return
 
     api = HfApi(token=token)
-    repo_id = os.getenv("HF_REPO", "stj-sumbr")
+    repo_id = os.getenv("HF_REPO_ID") or os.getenv("HF_REPO", "stj-sumbr")
     log.info(f"Upload para {repo_id}…")
 
     for parquet in sorted(output_dir.rglob("*.parquet")):

@@ -64,9 +64,9 @@ def build_meta_index(meta_dir: Path) -> dict[str, tuple[str, str]]:
         for r in records:
             if r.get("tipoDocumento") != "ACÓRDÃO":
                 continue
-            nr  = (r.get("numeroRegistro") or "").strip()
-            seq = str(r.get("SeqDocumento", "")).strip()
-            pub = (r.get("dataPublicacao") or "").strip().replace("-", "")
+            nr  = str(r.get("numeroRegistro") or "").strip()
+            seq = str(r.get("SeqDocumento") or "").strip()
+            pub = str(r.get("dataPublicacao") or "").strip().replace("-", "")
             if nr and seq and pub:
                 index[nr] = (seq, pub)
     log.info(f"Índice: {len(index):,} acórdãos")
