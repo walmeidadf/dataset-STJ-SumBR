@@ -213,9 +213,9 @@ def build_match_index() -> dict[str, tuple[str, str]]:
         for r in records:
             if r.get("tipoDocumento") != "ACÓRDÃO":
                 continue
-            nr = (r.get("numeroRegistro") or "").strip()
-            seq = str(r.get("SeqDocumento", ""))
-            pub = (r.get("dataPublicacao") or "").strip()
+            nr = str(r.get("numeroRegistro") or "").strip()
+            seq = str(r.get("SeqDocumento") or "").strip()
+            pub = str(r.get("dataPublicacao") or "").strip()
             if nr and seq and pub:
                 index[nr] = (seq, pub)
     log.info(f"Índice: {len(index):,} acórdãos indexados")
@@ -239,7 +239,7 @@ def collect_needed_zips(index: dict) -> dict[str, list[str]]:
         for r in records:
             if r.get("tipoDeDecisao") != "ACÓRDÃO":
                 continue
-            nr = (r.get("numeroRegistro") or "").strip()
+            nr = str(r.get("numeroRegistro") or "").strip()
             if nr in index:
                 seq, pub = index[nr]
                 date_key = pub.replace("-", "")  # "2026-04-27" → "20260427"
