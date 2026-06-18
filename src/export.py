@@ -160,6 +160,17 @@ def _upload_to_hub(output_dir: Path) -> None:
     repo_id = os.getenv("HF_REPO_ID") or os.getenv("HF_REPO", "stj-sumbr")
     log.info(f"Upload para {repo_id}…")
 
+    # Dataset card
+    card_path = BASE_DIR / "dataset_card.md"
+    if card_path.exists():
+        api.upload_file(
+            path_or_fileobj=str(card_path),
+            path_in_repo="README.md",
+            repo_id=repo_id,
+            repo_type="dataset",
+        )
+        log.info("  Upload: README.md (dataset card)")
+
     for parquet in sorted(output_dir.rglob("*.parquet")):
         path_in_repo = str(parquet.relative_to(output_dir))
         api.upload_file(
