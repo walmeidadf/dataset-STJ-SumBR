@@ -131,7 +131,7 @@ def run(input_path: Path, output_dir: Path, upload: bool = False) -> None:
         for split_name, split_df in splits.items():
             split_df = split_df.drop(columns=["_ano"], errors="ignore")
             out = config_dir / f"{split_name}.parquet"
-            split_df.to_parquet(out, index=False)
+            split_df.to_parquet(out, index=False, row_group_size=5_000)
             log.info(f"  {config_name}/{split_name}: {len(split_df):,} → {out.name}")
 
     # Estatísticas por split (config full)
