@@ -19,19 +19,19 @@ configs:
   - config_name: full
     data_files:
       - split: train
-        path: full/train.parquet
+        path: data/full/train.parquet
       - split: validation
-        path: full/validation.parquet
+        path: data/full/validation.parquet
       - split: test
-        path: full/test.parquet
+        path: data/full/test.parquet
   - config_name: ementa_only
     data_files:
       - split: train
-        path: ementa_only/train.parquet
+        path: data/ementa_only/train.parquet
       - split: validation
-        path: ementa_only/validation.parquet
+        path: data/ementa_only/validation.parquet
       - split: test
-        path: ementa_only/test.parquet
+        path: data/ementa_only/test.parquet
 ---
 
 # STJ-SumBR
